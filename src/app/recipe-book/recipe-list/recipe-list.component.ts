@@ -12,7 +12,12 @@ export class RecipeListComponent implements OnInit {
     new Recipe(
       "Test recipe",
       "Simple description",
-      "https://www.momontimeout.com/wp-content/uploads/2018/11/chicken-stir-fry-733x1103.jpg"
+      "https://cdn.pixabay.com/photo/2014/10/22/16/38/ingredients-498199_960_720.jpg"
+    ),
+    new Recipe(
+      "Test recipe",
+      "Simple description",
+      "https://cdn.pixabay.com/photo/2014/10/22/16/38/ingredients-498199_960_720.jpg"
     )
   ];
   constructor() {}
