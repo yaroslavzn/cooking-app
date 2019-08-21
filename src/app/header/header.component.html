@@ -1,7 +1,7 @@
 <nav class="navbar navbar-default">
   <div class="continer-fluid">
     <div class="navbar-header">
-      <a href="#" class="navbar-brand">Recipe Book</a>
+      <a routerLink="/" class="navbar-brand">Recipe Book</a>
       <button
         type="button"
         class="navbar-toggle"
@@ -17,24 +17,24 @@
       (window:resize)="collapsed = true"
     >
       <ul class="nav navbar-nav">
-        <li>
-          <a href="#" (click)="changeNavPath('recipes')">Recipes</a>
+        <li routerLinkActive="active">
+          <a routerLink="/recipe-book">Recipes</a>
         </li>
 
-        <li>
-          <a href="#" (click)="changeNavPath('shopping-list')">Shopping list</a>
+        <li routerLinkActive="active">
+          <a routerLink="/shopping-list">Shopping list</a>
         </li>
       </ul>
 
       <ul class="nav navbar-nav navbar-right">
         <li class="dropdown" appDropdown>
-          <a href="#" class="dropdown-toggle">
+          <a style="cursor:pointer;" class="dropdown-toggle">
             Manage
             <span class="caret"></span>
           </a>
           <ul class="dropdown-menu">
-            <li><a href="#">Save data</a></li>
-            <li><a href="#">Fetch data</a></li>
+            <li><a style="cursor:pointer;">Save data</a></li>
+            <li><a style="cursor:pointer;">Fetch data</a></li>
           </ul>
         </li>
       </ul>
