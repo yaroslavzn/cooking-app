@@ -22,4 +22,8 @@ export class ShoppingListComponent implements OnInit {
         }
       );
   }
+
+  onIngredientSelect(index: number) {
+    this.slService.editIngredient.next(index);
+  }
 }
