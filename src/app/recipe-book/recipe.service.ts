@@ -9,33 +9,19 @@ import {Subject} from 'rxjs';
 })
 export class RecipeService {
   recipesChanged: Subject<Recipe[]> = new Subject();
-  recipes = [
-    new Recipe(
-      'Bacon & roast onion salad',
-      'A rustic salad for one - contrast peas and caramelised onion with salty, streaky bacon and mustard dressing',
-      'https://www.bbcgoodfood.com/sites/default/files/styles/recipe/public/recipe_images/recipe-image-legacy-id--1284463_8.jpg?itok=ppdZiu1L',
-      [
-        new Ingredient('Bacon', 2),
-        new Ingredient('Red onion', 1),
-        new Ingredient('Olive oil', 2)
-      ]
-    ),
-    new Recipe(
-      'Garlic bacon butties',
-      'You\'ll need good, crusty white bread for these instant hangover cures',
-      'https://www.bbcgoodfood.com/sites/default/files/styles/recipe/public/recipe_images/recipe-image-legacy-id--8137_11.jpg?itok=bqyVDxvl',
-      [
-        new Ingredient('Rashers rindless back bacon', 6),
-        new Ingredient('White country loaf', 1)
-      ]
-    )
-  ];
+  recipes: Recipe[] = [];
 
   constructor(private slService: ShoppingListService) {
   }
 
   getRecipes() {
     return this.recipes.slice();
+  }
+
+  setRecipes(recipes: Recipe[]) {
+    console.log(recipes);
+    this.recipes = recipes;
+    this.recipesChanged.next([...this.recipes]);
   }
 
   addRecipeIngredientsToShoppingList(ingredients: Ingredient[]) {

@@ -3,6 +3,7 @@ import {Component, EventEmitter, OnDestroy, OnInit, Output} from '@angular/core'
 import {Recipe} from '../recipe.model';
 import {RecipeService} from '../recipe.service';
 import {Subscription} from 'rxjs';
+import {DataStorageService} from "../../shared/data-storage.service";
 
 @Component({
   selector: 'app-recipe-list',
@@ -14,7 +15,7 @@ export class RecipeListComponent implements OnInit, OnDestroy {
   s1$: Subscription;
 
   constructor(
-    private recipeService: RecipeService
+    private recipeService: RecipeService,
   ) {
   }
 

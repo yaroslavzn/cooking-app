@@ -79,7 +79,7 @@ export class RecipeEditComponent implements OnInit {
   }
 
   onRemoveIngredient(i) {
-    this.ingredients.splice(i, 1);
+    (this.form.get('ingredients') as FormArray).removeAt(i);
   }
 
   onSubmit() {
