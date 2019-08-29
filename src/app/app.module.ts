@@ -14,6 +14,8 @@ import {RecipeItemComponent} from './recipe-book/recipe-list/recipe-item/recipe-
 import {DropdownDirective} from './shared/dropdown.directive';
 import {AppRoutingModule} from './app-routing.module';
 import {RecipeEditComponent} from './recipe-book/recipe-edit/recipe-edit.component';
+import {AuthComponent} from './auth/auth.component';
+import {LoadingSpinnerComponent} from './shared/loading-spinner/loading-spinner.component';
 
 @NgModule({
   declarations: [
@@ -27,6 +29,8 @@ import {RecipeEditComponent} from './recipe-book/recipe-edit/recipe-edit.compone
     RecipeItemComponent,
     DropdownDirective,
     RecipeEditComponent,
+    AuthComponent,
+    LoadingSpinnerComponent
   ],
   imports: [
     BrowserModule,
