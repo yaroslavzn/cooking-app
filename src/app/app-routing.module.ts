@@ -18,9 +18,9 @@ const appRoutes: Routes = [
     path: 'recipe-book',
     component: RecipeBookComponent,
     canActivate: [AuthGuard],
-    resolve: {
-      recipesResolver: RecipesResolverService
-    },
+    // resolve: {
+    //   recipesResolver: RecipesResolverService
+    // },
     children: [
       {
         path: 'new',

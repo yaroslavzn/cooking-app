@@ -16,6 +16,6 @@ export class RecipeBookComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.dataStorageService.fetchData();
+    this.dataStorageService.fetchData().subscribe();
   }
 }

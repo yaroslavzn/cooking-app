@@ -1,21 +1,26 @@
-import {Component} from '@angular/core';
+import {Component, ComponentFactoryResolver, OnDestroy, ViewChild} from '@angular/core';
 import {NgForm} from '@angular/forms';
 import {AuthService, IAuthResponseData} from './auth.service';
-import {Observable} from 'rxjs';
+import {Observable, Subscription} from 'rxjs';
 import {Router} from '@angular/router';
+import {AlertComponent} from '../shared/alert/alert.component';
+import {PlaceholderDirective} from '../shared/placeholder/placeholder.directive';
 
 @Component({
   selector: 'app-auth',
   templateUrl: './auth.component.html'
 })
-export class AuthComponent {
+export class AuthComponent implements OnDestroy {
   isLoggingMode = true;
   isLoading = false;
   error: string = null;
+  @ViewChild(PlaceholderDirective, {static: false}) alertHost: PlaceholderDirective;
+  alert$: Subscription;
 
   constructor(
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private componentFactoryResolver: ComponentFactoryResolver
   ) {
   }
 
@@ -42,13 +47,36 @@ export class AuthComponent {
       this.router.navigate(['/recipe-book']);
     }, (errorMessage) => {
       this.error = errorMessage;
+      this.openErrorAlert(errorMessage);
       this.isLoading = false;
-
-      setTimeout(() => {
-        this.error = null;
-      }, 6000);
     });
 
     form.reset();
+  }
+
+  onCloseAlert() {
+    this.error = null;
+  }
+
+  openErrorAlert(message: string) {
+    const alertCmpFactory = this.componentFactoryResolver.resolveComponentFactory(AlertComponent);
+
+    const alertContainerRef = this.alertHost.viewContainerRef;
+    alertContainerRef.clear();
+
+    const componentRef = alertContainerRef.createComponent(alertCmpFactory);
+
+    componentRef.instance.error = message;
+
+    this.alert$ = componentRef.instance.close.subscribe(() => {
+      this.alert$.unsubscribe();
+      alertContainerRef.clear();
+    });
+  }
+
+  ngOnDestroy(): void {
+    if (this.alert$) {
+      this.alert$.unsubscribe();
+    }
   }
 }

@@ -1,10 +1,10 @@
-import {Injectable} from "@angular/core";
-import {ActivatedRouteSnapshot, Resolve, RouterStateSnapshot} from "@angular/router";
-import {Observable} from "rxjs";
+import {Injectable} from '@angular/core';
+import {ActivatedRouteSnapshot, Resolve, RouterStateSnapshot} from '@angular/router';
+import {Observable} from 'rxjs';
 
-import {Recipe} from "./recipe.model";
-import {DataStorageService} from "../shared/data-storage.service";
-import {RecipeService} from "./recipe.service";
+import {Recipe} from './recipe.model';
+import {DataStorageService} from '../shared/data-storage.service';
+import {RecipeService} from './recipe.service';
 
 @Injectable({
   providedIn: 'root'

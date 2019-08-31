@@ -33,7 +33,9 @@ export class DataStorageService {
             return {...recipe, ingredients: recipe.ingredients ? recipe.ingredients : []};
           });
         }),
-        tap(recipes => this.recipeService.setRecipes(recipes))
+        tap(recipes => {
+          return this.recipeService.setRecipes(recipes);
+        })
       );
   }
 }
