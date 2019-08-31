@@ -1,6 +1,8 @@
 import {Component} from '@angular/core';
 import {NgForm} from '@angular/forms';
-import {AuthService} from './auth.service';
+import {AuthService, IAuthResponseData} from './auth.service';
+import {Observable} from 'rxjs';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-auth',
@@ -12,7 +14,8 @@ export class AuthComponent {
   error: string = null;
 
   constructor(
-    private authService: AuthService
+    private authService: AuthService,
+    private router: Router
   ) {
   }
 
@@ -25,22 +28,26 @@ export class AuthComponent {
     const password = form.value.password;
     this.isLoading = true;
 
-    if (this.isLoggingMode) {
-      //...
-    } else {
-      this.authService.signUp(email, password)
-        .subscribe(authResponse => {
-          console.log(authResponse);
-          this.isLoading = false;
-        }, (errorMessage) => {
-          this.error = errorMessage;
-          this.isLoading = false;
+    let authObs: Observable<IAuthResponseData>;
 
-          setTimeout(() => {
-            this.error = null;
-          }, 3000);
-        });
+    if (this.isLoggingMode) {
+      authObs = this.authService.logIn(email, password);
+    } else {
+      authObs = this.authService.signUp(email, password);
     }
+
+    authObs.subscribe(authResponse => {
+      console.log(authResponse);
+      this.isLoading = false;
+      this.router.navigate(['/recipe-book']);
+    }, (errorMessage) => {
+      this.error = errorMessage;
+      this.isLoading = false;
+
+      setTimeout(() => {
+        this.error = null;
+      }, 6000);
+    });
 
     form.reset();
   }
