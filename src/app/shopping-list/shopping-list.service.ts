@@ -1,6 +1,9 @@
 import {EventEmitter, Injectable} from '@angular/core';
-import {Ingredient} from '../shared/ingredient.model';
 import {Subject} from 'rxjs';
+import {Store} from '@ngrx/store';
+
+import {Ingredient} from '../shared/ingredient.model';
+import * as ShoppingListActions from './store/shopping-list.actions';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +16,7 @@ export class ShoppingListService {
     new Ingredient('Tomatoes', 12)
   ];
 
-  constructor() {
+  constructor(private store: Store<{shoppingList: {ingredients: Ingredient[]}}>) {
   }
 
   getIngredients() {
@@ -35,12 +38,14 @@ export class ShoppingListService {
   }
 
   updateIngredient(index: number, newIngredient: Ingredient) {
-    this.ingredients[index] = newIngredient;
-    this.ingredientsChanged.next(this.ingredients.slice());
+    // this.ingredients[index] = newIngredient;
+    // this.ingredientsChanged.next(this.ingredients.slice());
+    this.store.dispatch(new ShoppingListActions.UpdateIngredient({index, ingredient: newIngredient}));
   }
 
   removeIngredient(index: number) {
-    this.ingredients.splice(index, 1);
-    this.ingredientsChanged.next(this.ingredients.slice());
+    // this.ingredients.splice(index, 1);
+    // this.ingredientsChanged.next(this.ingredients.slice());
+    this.store.dispatch(new ShoppingListActions.DeleteIngredient(index));
   }
 }
