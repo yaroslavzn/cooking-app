@@ -1,17 +1,18 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
-import {DataStorageService} from '../shared/data-storage.service';
-import {AuthService} from '../auth/auth.service';
-import {User} from '../auth/user.model';
-import {Subscription} from 'rxjs';
-import {Store} from '@ngrx/store';
+import { Component, OnDestroy, OnInit } from "@angular/core";
+import { DataStorageService } from "../shared/data-storage.service";
+import { AuthService } from "../auth/auth.service";
+import { User } from "../auth/user.model";
+import { Subscription } from "rxjs";
+import { Store } from "@ngrx/store";
 
-import * as fromApp from '../store/app.reducer';
-import {map} from 'rxjs/operators';
+import * as fromApp from "../store/app.reducer";
+import * as AuthActions from "../auth/store/auth.actions";
+import { map } from "rxjs/operators";
 
 @Component({
-  selector: 'app-header',
-  templateUrl: './header.component.html',
-  styleUrls: ['./header.component.scss']
+  selector: "app-header",
+  templateUrl: "./header.component.html",
+  styleUrls: ["./header.component.scss"]
 })
 export class HeaderComponent implements OnInit, OnDestroy {
   collapsed = true;
@@ -22,8 +23,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     private dataStorageService: DataStorageService,
     private authService: AuthService,
     private store: Store<fromApp.AppState>
-  ) {
-  }
+  ) {}
 
   onSave() {
     this.dataStorageService.saveData();
@@ -34,13 +34,12 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.userSub$ = this.store.select('auth')
-      .pipe(
-        map(authState => authState.user)
-      )
+    this.userSub$ = this.store
+      .select("auth")
+      .pipe(map(authState => authState.user))
       .subscribe(user => {
-      this.isAuthenticated = !!user;
-    });
+        this.isAuthenticated = !!user;
+      });
   }
 
   ngOnDestroy(): void {
@@ -48,6 +47,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   onLogout() {
-    this.authService.logOut();
+    // this.authService.logOut();
+    this.store.dispatch(new AuthActions.Logout());
   }
 }

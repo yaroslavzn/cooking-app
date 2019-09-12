@@ -1,34 +1,31 @@
-import {NgModule} from '@angular/core';
-import {PreloadAllModules, RouterModule, Routes} from '@angular/router';
+import { NgModule } from "@angular/core";
+import { PreloadAllModules, RouterModule, Routes } from "@angular/router";
+import { AuthGuard } from "./auth/auth.guard";
 
 const appRoutes: Routes = [
   {
-    path: '',
-    redirectTo: 'recipe-book',
-    pathMatch: 'full'
+    path: "",
+    redirectTo: "recipe-book",
+    pathMatch: "full"
   },
   {
-    path: 'recipe-book',
-    loadChildren: './recipe-book/recibe-book.module#RecibeBookModule'
+    path: "recipe-book",
+    loadChildren: "./recipe-book/recibe-book.module#RecibeBookModule"
   },
   {
-    path: 'shopping-list',
-    loadChildren: './shopping-list/shopping-list.module#ShoppingListModule'
+    path: "shopping-list",
+    loadChildren: "./shopping-list/shopping-list.module#ShoppingListModule"
   },
   {
-    path: 'auth',
-    loadChildren: './auth/auth.module#AuthModule'
+    path: "auth",
+    loadChildren: "./auth/auth.module#AuthModule"
   }
 ];
 
 @NgModule({
   imports: [
-    RouterModule.forRoot(appRoutes, {preloadingStrategy: PreloadAllModules})
+    RouterModule.forRoot(appRoutes, { preloadingStrategy: PreloadAllModules })
   ],
-  exports: [
-    RouterModule
-  ]
+  exports: [RouterModule]
 })
-export class AppRoutingModule {
-
-}
+export class AppRoutingModule {}
