@@ -58,7 +58,7 @@ export function authReducer(
     case AuthActions.AUTO_LOGIN:
       return {
         ...state
-      }
+      };
     default:
       return {
         ...state

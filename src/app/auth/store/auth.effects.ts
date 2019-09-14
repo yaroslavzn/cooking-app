@@ -1,4 +1,4 @@
-import { Actions, ofType, Effect } from "@ngrx/effects";
+import { Actions, ofType, Effect, act } from "@ngrx/effects";
 import * as AuthActions from "./auth.actions";
 import { switchMap, catchError, map, tap } from "rxjs/operators";
 import { HttpClient } from "@angular/common/http";
@@ -22,7 +22,8 @@ const authHandler = (
   email: string,
   id: string,
   token: string,
-  expireIn: number
+  expireIn: number,
+  redirect: boolean
 ) => {
   const currentTime = new Date().getTime();
   const expiresIn = new Date(currentTime + expireIn * 1000);
@@ -34,7 +35,8 @@ const authHandler = (
     email,
     id,
     token,
-    expireIn: expiresIn
+    expireIn: expiresIn,
+    redirect
   });
 };
 
@@ -86,7 +88,8 @@ export class AuthEffects {
               resData.email,
               resData.localId,
               resData.idToken,
-              +resData.expiresIn
+              +resData.expiresIn,
+              true
             );
           }),
           catchError(error => {
@@ -101,8 +104,10 @@ export class AuthEffects {
   })
   signinRedirect = this.actions$.pipe(
     ofType(AuthActions.AUTHENTICATE),
-    tap(() => {
-      this.router.navigate(["/"]);
+    tap((action: AuthActions.Authenticate) => {
+      if (action.payload.redirect) {
+        this.router.navigate(["/"]);
+      }
     })
   );
 
@@ -140,7 +145,8 @@ export class AuthEffects {
               resData.email,
               resData.localId,
               resData.idToken,
-              +resData.expiresIn
+              +resData.expiresIn,
+              true
             );
           }),
           catchError(error => {
@@ -179,7 +185,8 @@ export class AuthEffects {
             email: loadedUser.email,
             id: loadedUser.id,
             token: loadedUser._token,
-            expireIn: new Date(loadedUser._tokenExpiresIn)
+            expireIn: new Date(loadedUser._tokenExpiresIn),
+            redirect: false
           });
         }
 

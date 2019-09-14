@@ -24,7 +24,13 @@ export class Authenticate implements Action {
   readonly type = AUTHENTICATE;
 
   constructor(
-    public payload: { email: string; id: string; token: string; expireIn: Date }
+    public payload: {
+      email: string;
+      id: string;
+      token: string;
+      expireIn: Date;
+      redirect: boolean;
+    }
   ) {}
 }
 

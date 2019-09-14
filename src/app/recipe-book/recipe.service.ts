@@ -1,23 +1,20 @@
-import {Injectable} from '@angular/core';
-import {Store} from '@ngrx/store';
-import {Subject} from 'rxjs';
+import { Injectable } from "@angular/core";
+import { Store } from "@ngrx/store";
+import { Subject } from "rxjs";
 
-import {Recipe} from './recipe.model';
-import {Ingredient} from '../shared/ingredient.model';
-import * as ShoppingListActions from '../shopping-list/store/shopping-list.actions';
-import * as fromApp from '../store/app.reducer';
+import { Recipe } from "./recipe.model";
+import { Ingredient } from "../shared/ingredient.model";
+import * as ShoppingListActions from "../shopping-list/store/shopping-list.actions";
+import * as fromApp from "../store/app.reducer";
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root"
 })
 export class RecipeService {
   recipesChanged: Subject<Recipe[]> = new Subject();
   recipes: Recipe[] = [];
 
-  constructor(
-    private store: Store<fromApp.AppState>
-  ) {
-  }
+  constructor(private store: Store<fromApp.AppState>) {}
 
   getRecipes() {
     return this.recipes.slice();
